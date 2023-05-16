@@ -128,7 +128,6 @@ _start:
     mov ah, 0x10 ; 0x1000
     mov qword [rsp+0x70], rax ; align to the page size
 
-    ; TODO: blah blah write syscall
     xor rax, rax
     mov al, 0x1
     mov rsi, rsp
