@@ -1,5 +1,6 @@
 global _start
 section .text
+
 _start:
     mov rdi, "./clonez"
     push rdi

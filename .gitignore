@@ -1,3 +1,4 @@
+# Build Artifacts
 *.o
 elf-eater
 clone*
