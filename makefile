@@ -7,4 +7,4 @@ all:
 	elf-eater
 
 clean:
-	rm -f *.o clone* elf-eater
+	rm -f *.o clone* elf-eater scan xfiles inf

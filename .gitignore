@@ -2,3 +2,7 @@
 *.o
 elf-eater
 clone*
+scan
+inf
+inf.c
+xfiles
