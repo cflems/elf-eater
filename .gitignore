@@ -3,6 +3,7 @@
 elf-eater
 clone*
 scan
+scan-*
 inf
 inf.c
 xfiles
